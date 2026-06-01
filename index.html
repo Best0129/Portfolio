@@ -21,6 +21,25 @@
     --gray-600: #475569;
     --gray-800: #1e293b;
     --accent: #0ea5e9;
+    --nav-bg: rgba(255,255,255,0.92);
+    --hero-bg: linear-gradient(160deg, #f0f7ff 0%, #ffffff 50%, #f8fafc 100%);
+  }
+
+  [data-theme="dark"] {
+    --navy: #e2e8f0;
+    --blue: #60a5fa;
+    --blue-light: #93c5fd;
+    --blue-pale: #1e3a5f;
+    --white: #0f172a;
+    --gray-50: #1e293b;
+    --gray-100: #1e293b;
+    --gray-200: #334155;
+    --gray-400: #64748b;
+    --gray-600: #94a3b8;
+    --gray-800: #e2e8f0;
+    --accent: #38bdf8;
+    --nav-bg: rgba(15,23,42,0.92);
+    --hero-bg: linear-gradient(160deg, #0f172a 0%, #0f172a 50%, #1e293b 100%);
   }
 
   html { scroll-behavior: smooth; }
@@ -31,12 +50,13 @@
     color: var(--gray-800);
     line-height: 1.6;
     overflow-x: hidden;
+    transition: background 0.3s, color 0.3s;
   }
 
   /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(255,255,255,0.92);
+    background: var(--nav-bg);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--gray-200);
     padding: 0 2rem;
@@ -49,7 +69,7 @@
     color: var(--blue);
     letter-spacing: -0.02em;
   }
-  .nav-links { display: flex; gap: 2rem; }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
   .nav-links a {
     text-decoration: none; font-size: 14px; font-weight: 400;
     color: var(--gray-600);
@@ -57,12 +77,22 @@
   }
   .nav-links a:hover { color: var(--blue); }
 
+  .theme-btn {
+    width: 36px; height: 36px; border-radius: 8px;
+    border: 1px solid var(--gray-200);
+    background: var(--gray-100);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 16px; transition: all 0.2s;
+    color: var(--gray-600);
+  }
+  .theme-btn:hover { border-color: var(--blue); background: var(--blue-pale); }
+
   /* HERO */
   .hero {
     min-height: 100vh;
     display: flex; align-items: center;
     padding: 80px 0 60px;
-    background: linear-gradient(160deg, #f0f7ff 0%, #ffffff 50%, #f8fafc 100%);
+    background: var(--hero-bg);
     position: relative; overflow: hidden;
   }
   .hero::before {
@@ -306,6 +336,7 @@
     <a href="#projects">Projects</a>
     <a href="#skills">Skills</a>
     <a href="#contact">Contact</a>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">☀</button>
   </div>
 </nav>
 
@@ -513,5 +544,15 @@
   <span>Poramate Phomud</span> · Full Stack Developer · Bangkok, Thailand
 </footer>
 
+<script>
+  const btn = document.getElementById('themeBtn');
+  const html = document.documentElement;
+  let dark = false;
+  btn.addEventListener('click', () => {
+    dark = !dark;
+    html.setAttribute('data-theme', dark ? 'dark' : '');
+    btn.textContent = dark ? '☾' : '☀';
+  });
+</script>
 </body>
 </html>
