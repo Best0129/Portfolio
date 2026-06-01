@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poramate Phomud — Full Stack Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0a1628;
+    --blue: #1a56db;
+    --blue-light: #3b82f6;
+    --blue-pale: #eff6ff;
+    --white: #ffffff;
+    --gray-50: #f8fafc;
+    --gray-100: #f1f5f9;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --accent: #0ea5e9;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--gray-800);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 0 2rem;
+    height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px; font-weight: 500;
+    color: var(--blue);
+    letter-spacing: -0.02em;
+  }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    text-decoration: none; font-size: 14px; font-weight: 400;
+    color: var(--gray-600);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--blue); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 80px 0 60px;
+    background: linear-gradient(160deg, #f0f7ff 0%, #ffffff 50%, #f8fafc 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(26,86,219,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -100px; left: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(14,165,233,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--blue-pale);
+    border: 1px solid rgba(26,86,219,0.2);
+    color: var(--blue);
+    font-size: 12px; font-weight: 500;
+    padding: 4px 12px; border-radius: 100px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .hero-tag::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--blue); animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 600; line-height: 1.1;
+    color: var(--navy); letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+  }
+  .hero h1 span { color: var(--blue); }
+  .hero-sub {
+    font-size: 1.15rem; color: var(--gray-600);
+    font-weight: 300; margin-bottom: 1.5rem;
+    font-family: 'DM Mono', monospace; font-size: 14px;
+  }
+  .hero-desc {
+    font-size: 1rem; color: var(--gray-600);
+    max-width: 560px; line-height: 1.75;
+    margin-bottom: 2rem;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--blue); color: #fff;
+    padding: 10px 22px; border-radius: 8px;
+    font-size: 14px; font-weight: 500;
+    text-decoration: none; transition: all 0.2s;
+    border: 1.5px solid var(--blue);
+  }
+  .btn-primary:hover { background: #1648c4; border-color: #1648c4; transform: translateY(-1px); }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--gray-800); padding: 10px 22px; border-radius: 8px;
+    font-size: 14px; font-weight: 500; text-decoration: none;
+    border: 1.5px solid var(--gray-200); transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-1px); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3rem;
+    padding-top: 2rem; border-top: 1px solid var(--gray-200);
+  }
+  .stat-item { }
+  .stat-num { font-size: 1.6rem; font-weight: 600; color: var(--navy); line-height: 1; }
+  .stat-label { font-size: 12px; color: var(--gray-400); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* STACK BADGES */
+  .stack-row {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.5rem;
+  }
+  .stack-badge {
+    background: var(--gray-100); color: var(--gray-600);
+    font-size: 12px; font-weight: 500;
+    padding: 4px 10px; border-radius: 6px;
+    font-family: 'DM Mono', monospace;
+    border: 1px solid var(--gray-200);
+    transition: all 0.15s;
+  }
+  .stack-badge:hover { background: var(--blue-pale); color: var(--blue); border-color: rgba(26,86,219,0.3); }
+
+  /* SECTIONS */
+  section { padding: 80px 0; }
+  section:nth-child(even) { background: var(--gray-50); }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--blue); margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-size: 1.9rem; font-weight: 600;
+    color: var(--navy); letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .section-desc { font-size: 15px; color: var(--gray-600); max-width: 480px; }
+
+  .section-header { margin-bottom: 3rem; }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+
+  .project-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 14px;
+    padding: 1.75rem 2rem;
+    transition: all 0.25s;
+    position: relative; overflow: hidden;
+  }
+  .project-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--accent));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .project-card:hover { border-color: rgba(26,86,219,0.3); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(26,86,219,0.08); }
+  .project-card:hover::before { transform: scaleX(1); }
+
+  .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+  .project-name { font-size: 1.1rem; font-weight: 600; color: var(--navy); }
+  .project-link {
+    font-size: 12px; color: var(--blue); text-decoration: none;
+    display: flex; align-items: center; gap: 4px;
+    font-family: 'DM Mono', monospace;
+    opacity: 0.7; transition: opacity 0.2s;
+  }
+  .project-link:hover { opacity: 1; }
+
+  .project-tech { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
+  .tech-tag {
+    background: var(--blue-pale); color: var(--blue);
+    font-size: 11px; font-weight: 500;
+    padding: 3px 8px; border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .project-bullets { list-style: none; padding: 0; }
+  .project-bullets li {
+    font-size: 14px; color: var(--gray-600); line-height: 1.6;
+    padding: 3px 0 3px 16px; position: relative;
+  }
+  .project-bullets li::before {
+    content: '→'; position: absolute; left: 0;
+    color: var(--blue); font-size: 12px;
+  }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; }
+
+  .skill-group {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .skill-group-title {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--blue); margin-bottom: 1rem;
+    font-family: 'DM Mono', monospace;
+  }
+  .skill-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-item {
+    background: var(--gray-100); color: var(--gray-800);
+    font-size: 12px; padding: 4px 10px; border-radius: 6px;
+    font-weight: 400; border: 1px solid var(--gray-200);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* EDUCATION */
+  .edu-card {
+    background: var(--white); border: 1px solid var(--gray-200);
+    border-radius: 12px; padding: 1.75rem 2rem;
+    display: flex; gap: 1.5rem; align-items: flex-start;
+  }
+  .edu-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: var(--blue-pale); border: 1px solid rgba(26,86,219,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .edu-degree { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 3px; }
+  .edu-school { font-size: 13px; color: var(--gray-600); margin-bottom: 3px; }
+  .edu-year { font-size: 12px; color: var(--gray-400); font-family: 'DM Mono', monospace; }
+
+  /* CONTACT */
+  .contact-row { display: flex; flex-wrap: wrap; gap: 1rem; }
+  .contact-item {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--white); border: 1px solid var(--gray-200);
+    border-radius: 10px; padding: 12px 18px;
+    text-decoration: none; color: var(--gray-800);
+    font-size: 14px; transition: all 0.2s;
+  }
+  .contact-item:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-2px); }
+  .contact-icon { font-size: 16px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy); color: rgba(255,255,255,0.5);
+    text-align: center; padding: 2rem;
+    font-size: 13px; font-family: 'DM Mono', monospace;
+  }
+  footer span { color: rgba(255,255,255,0.8); }
+
+  /* ANIMATIONS */
+  .fade-in { opacity: 0; transform: translateY(20px); animation: fadeIn 0.6s forwards; }
+  @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+  .fade-in:nth-child(1) { animation-delay: 0.1s; }
+  .fade-in:nth-child(2) { animation-delay: 0.2s; }
+  .fade-in:nth-child(3) { animation-delay: 0.3s; }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .hero-stats { gap: 1.5rem; }
+    .hero h1 { font-size: 2.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">poramate.dev</div>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-tag">Available for Junior Dev Roles</div>
+    <h1 class="fade-in">Poramate<br><span>Phomud</span></h1>
+    <p class="hero-sub fade-in">Full Stack Developer · Next.js · React · Django</p>
+    <p class="hero-desc fade-in">
+      IT graduate from KMITL with hands-on experience delivering full-stack web applications from concept to production. I design clean interfaces and build scalable APIs.
+    </p>
+    <div class="hero-actions fade-in">
+      <a href="#projects" class="btn-primary">View Projects →</a>
+      <a href="mailto:p.phomud@gmail.com" class="btn-ghost">Get in Touch</a>
+    </div>
+    <div class="stack-row fade-in">
+      <span class="stack-badge">Next.js</span>
+      <span class="stack-badge">React</span>
+      <span class="stack-badge">Django</span>
+      <span class="stack-badge">PostgreSQL</span>
+      <span class="stack-badge">Node.js</span>
+      <span class="stack-badge">Prisma ORM</span>
+      <span class="stack-badge">Figma</span>
+      <span class="stack-badge">Vercel</span>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Projects</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Years Study</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">Full</div>
+        <div class="stat-label">Stack</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">// selected work</div>
+      <h2 class="section-title">Projects</h2>
+      <p class="section-desc">3 full-stack applications built from design to deployment.</p>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-name">GymBuddy</div>
+          <a href="https://github.com/Best0129/Client-side-Project" target="_blank" class="project-link">github.com/Best0129/Client-side-Project ↗</a>
+        </div>
+        <div class="project-tech">
+          <span class="tech-tag">Next.js</span>
+          <span class="tech-tag">Neon PostgreSQL</span>
+          <span class="tech-tag">Prisma ORM</span>
+          <span class="tech-tag">Figma</span>
+        </div>
+        <ul class="project-bullets">
+          <li>Built a fitness web app with workout plan management, community feed, and nutrition tracking modules</li>
+          <li>Designed a fully responsive UI in Figma before implementation, reducing front-end rework significantly</li>
+          <li>Deployed serverless PostgreSQL via Neon for zero-cold-start database performance</li>
+        </ul>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-name">Lawyers Dashboard</div>
+          <a href="https://github.com/Best0129/Lawyers" target="_blank" class="project-link">github.com/Best0129/Lawyers ↗</a>
+        </div>
+        <div class="project-tech">
+          <span class="tech-tag">Next.js</span>
+          <span class="tech-tag">Neon PostgreSQL</span>
+          <span class="tech-tag">Prisma ORM</span>
+        </div>
+        <ul class="project-bullets">
+          <li>Developed a multi-user dashboard for managing lawyer profiles, case records, and document metadata</li>
+          <li>Implemented full-text search and filter system across 5+ data fields, improving lookup efficiency</li>
+          <li>Structured relational schema with Prisma ORM, enabling type-safe queries and easy schema migrations</li>
+        </ul>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-name">DevOnBucket</div>
+          <a href="https://github.com/Best0129/DevOnBucket" target="_blank" class="project-link">github.com/Best0129/DevOnBucket ↗</a>
+        </div>
+        <div class="project-tech">
+          <span class="tech-tag">Django</span>
+          <span class="tech-tag">PostgreSQL</span>
+          <span class="tech-tag">Python</span>
+        </div>
+        <ul class="project-bullets">
+          <li>Created a developer community platform supporting knowledge sharing, threaded discussions, and collaboration</li>
+          <li>Built authentication, user profiles, and post CRUD operations using Django's ORM and class-based views</li>
+          <li>Followed MVC architecture and wrote reusable template components to maintain a clean codebase</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">// expertise</div>
+      <h2 class="section-title">Technical Skills</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">Frontend</div>
+        <div class="skill-list">
+          <span class="skill-item">JavaScript ES2022+</span>
+          <span class="skill-item">HTML5</span>
+          <span class="skill-item">CSS3</span>
+          <span class="skill-item">React</span>
+          <span class="skill-item">Next.js</span>
+          <span class="skill-item">Figma</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Backend</div>
+        <div class="skill-list">
+          <span class="skill-item">Python</span>
+          <span class="skill-item">Node.js</span>
+          <span class="skill-item">Django</span>
+          <span class="skill-item">Express</span>
+          <span class="skill-item">Prisma ORM</span>
+          <span class="skill-item">REST API</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Database & Cloud</div>
+        <div class="skill-list">
+          <span class="skill-item">PostgreSQL</span>
+          <span class="skill-item">Neon Serverless</span>
+          <span class="skill-item">Vercel</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Tools</div>
+        <div class="skill-list">
+          <span class="skill-item">Git</span>
+          <span class="skill-item">GitHub</span>
+          <span class="skill-item">VS Code</span>
+          <span class="skill-item">Linux CLI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">// background</div>
+      <h2 class="section-title">Education</h2>
+    </div>
+    <div class="edu-card">
+      <div class="edu-icon">🎓</div>
+      <div>
+        <div class="edu-degree">Bachelor of Science in Information Technology</div>
+        <div class="edu-school">King Mongkut's Institute of Technology Ladkrabang (KMITL)</div>
+        <div class="edu-year">2022 – 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">// reach out</div>
+      <h2 class="section-title">Contact</h2>
+      <p class="section-desc">Open to junior developer roles and freelance projects.</p>
+    </div>
+    <div class="contact-row">
+      <a href="mailto:p.phomud@gmail.com" class="contact-item">
+        <span class="contact-icon">✉</span> p.phomud@gmail.com
+      </a>
+      <a href="tel:+66950252795" class="contact-item">
+        <span class="contact-icon">☎</span> +66 95 025 2795
+      </a>
+      <a href="https://github.com/Best0129" target="_blank" class="contact-item">
+        <span class="contact-icon">⌥</span> github.com/Best0129
+      </a>
+      <a href="https://linkedin.com/in/poramatephomud" target="_blank" class="contact-item">
+        <span class="contact-icon">in</span> linkedin.com/in/poramatephomud
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Poramate Phomud</span> · Full Stack Developer · Bangkok, Thailand
+</footer>
+
+</body>
+</html>
